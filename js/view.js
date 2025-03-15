@@ -1,6 +1,7 @@
-class Interface {
+export class Interface {
   constructor() {}
 
+  display() {}
   displayPrompt() {}
   displayError() {}
   takeInput() {}
