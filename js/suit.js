@@ -1,13 +1,14 @@
 import { Card } from "./card.js";
 
 export class Suit {
-  constructor(type) {
+  constructor(type, color) {
     this.type = type;
+    this.color = color;
     this.createCards();
   }
 
   createCards() {
-    this.cards = cardInstances(this.type);
+    this.cards = cardInstances(this.type, this.color);
   }
 }
 
@@ -27,10 +28,10 @@ const cards = {
   ace: { value: 1, type: "number", acronym: "A" },
 };
 
-const cardInstances = (suit) => {
+const cardInstances = (suit, color) => {
   return Object.keys(cards).reduce((instances, card) => {
     const { type, value, acronym } = cards[card];
-    instances[card] = new Card(suit, type, value, suit[0] + acronym);
+    instances[card] = new Card(suit, type, value, suit[0] + acronym, color);
     return instances;
   }, {});
 };
