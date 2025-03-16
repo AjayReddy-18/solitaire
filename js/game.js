@@ -6,7 +6,7 @@ export class Game {
     const { stock, piles } = this.deck.solitaireArrangement();
     this.stock = stock;
     this.piles = piles;
-    this.foundations = { spades: [], hearts: [], clubs: [], diamonds: [] };
+    this.foundations = [[], [], [], []];
   }
 
   start() {

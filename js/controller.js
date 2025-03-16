@@ -11,7 +11,7 @@ const processStock = (stock) => {
 };
 
 const processPiles = (piles) => {
-  const rows = Array.from({ length: 7 }, () => []);
+  const rows = Array.from({ length: 10 }, () => []);
 
   const newPiles = Array.from({ length: 7 }, (_, i) => {
     const newPile = piles[i].opened
@@ -20,6 +20,7 @@ const processPiles = (piles) => {
 
     return newPile.concat(Array(10 - newPile.length).fill(""));
   });
+  newPiles.unshift(Array.from({ length: 10 }, (_, i) => i));
 
   newPiles.forEach((pile) => {
     pile.forEach((card, i) => {
@@ -32,8 +33,7 @@ const processPiles = (piles) => {
 };
 
 const processFoundation = (foundations) => {
-  const { spades, hearts, diamonds, clubs } = foundations;
-  return [spades, hearts, clubs, diamonds]
+  return foundations
     .map((suit) => (suit.length === 0 ? "Empty" : suit[0]))
     .join("\t\t");
 };

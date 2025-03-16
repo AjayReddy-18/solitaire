@@ -1,8 +1,8 @@
 export class Interface {
   constructor() {
-    this.header = `\tstock\t\t\t\t\t\t\t      foundation\nclosed\t\topened\t\t\t\tspades\t\thearts\t\tclubs\t\tdiamonds`;
+    this.header = `\tstock\t\t\t\t\t\t\t      foundation\nclosed\t\topened\t\t\t\tspades(1)\thearts(2)\tclubs(3)\tdiamonds(4)`;
     this.pileHeader =
-      "Pile 1\t\tPile 2\t\tPile 3\t\tPile 4\t\tPile 5\t\tPile 6\t\tPile 7";
+      "Row Index\tPile 1\t\tPile 2\t\tPile 3\t\tPile 4\t\tPile 5\t\tPile 6\t\tPile 7";
   }
 
   display(stock, foundations, piles) {
