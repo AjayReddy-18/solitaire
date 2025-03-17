@@ -7,6 +7,11 @@ export class Game {
     this.stock = stock;
     this.piles = piles;
     this.foundations = [[], [], [], []];
+    this.moves = 0;
+  }
+
+  incrementMoves() {
+    this.moves++;
   }
 
   hasWon() {

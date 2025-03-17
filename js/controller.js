@@ -17,6 +17,10 @@ const inputPrompts = {
   foundation: "Enter foundation number:",
 };
 
+const errorMessages = {
+  action: "Invalid action!",
+};
+
 const processStock = (stock) => {
   const stockData = {};
 
@@ -62,23 +66,24 @@ const processData = (data) => {
   return { stock, piles, foundations };
 };
 
-const availableActions = (stock) => {
-  const availableActions = [actions["1"], actions["2"]];
+const availableActions = (data) => {
+  const { stock } = data;
+  const availableActions = [1, 2];
 
   if (stock.opened.length === 0 || stock.closed.length !== 0) {
-    availableActions.push(actions["3"]);
+    availableActions.push(3);
   }
 
   if (stock.opened.length > 0) {
-    availableActions.push(actions["4"]);
-    availableActions.push(actions["5"]);
+    availableActions.push(4);
+    availableActions.push(5);
   }
 
   if (stock.closed.length === 0) {
-    availableActions.push(actions["6"]);
+    availableActions.push(6);
   }
 
-  return availableActions.join("\n");
+  return availableActions;
 };
 
 const pileToPile = (gameData) => {
@@ -129,19 +134,43 @@ const performAction = (gameData, action) => {
   return actions[action - 1](gameData);
 };
 
-const play = (game, view) => {
+const availableActionsInString = (validActions) => {
+  return validActions.map((actionIndex) => actions[actionIndex]).join("\n");
+};
+
+const onScreen = (data, actions) => {
+  const { stock, piles, foundations } = processData(data);
+  view.display(stock, foundations, piles);
+  view.displayActions(actions);
+};
+
+const invalidAction = () => {
+  view.displayError(errorMessages.action);
+};
+
+const isValidAction = (validActions, action) => {
+  return validActions.includes(action);
+};
+
+const playerTurn = (data) => {
+  const validActions = availableActions(data);
+  const validActionsInString = availableActionsInString(validActions);
+  onScreen(data, validActionsInString);
+  const action = view.takeInput("Choose an action:");
+  if (!isValidAction(validActions, action)) return invalidAction();
+  return performAction(data, action);
+};
+
+const play = (game) => {
   const gameData = game.data();
   while (!game.hasWon()) {
-    const { stock, piles, foundations } = processData(gameData);
-    view.display(stock, foundations, piles);
-    view.displayActions(availableActions(gameData.stock));
-    const action = view.takeInput("Choose an action:");
-    performAction(gameData, action);
+    if (playerTurn(gameData)) game.incrementMoves();
   }
+  game.showResults();
 };
 
 const main = () => {
-  play(game, view);
+  play(game);
 };
 
 const game = new Game();

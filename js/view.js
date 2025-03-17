@@ -20,7 +20,10 @@ export class Interface {
     console.log();
   }
 
-  displayError() {}
+  displayError(message) {
+    console.error(message);
+    prompt("Press any key to continue...");
+  }
 
   takeInput(inputPrompt) {
     return +prompt(inputPrompt);
