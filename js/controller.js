@@ -49,7 +49,7 @@ const processData = (data) => {
 const stockAction = (stock) => {
   const actions = [];
 
-  if (stock.opened.length === 0) {
+  if (stock.opened.length === 0 || stock.closed.length !== 0) {
     actions.push("3. Turn card from stock");
   }
 
@@ -80,8 +80,12 @@ const pileToFoundation = (gameData) => {
   game.pileToFoundation(from, to);
 };
 
+const turnCardFromStock = () => {
+  game.turnCardFromStock();
+};
+
 const performAction = (gameData, action) => {
-  const actions = [pileToPile, pileToFoundation];
+  const actions = [pileToPile, pileToFoundation, turnCardFromStock];
 
   return actions[action - 1](gameData);
 };

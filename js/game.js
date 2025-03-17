@@ -40,6 +40,10 @@ export class Game {
     if (fromPile.opened.length === 0) this.turnCard(fromPile);
   }
 
+  turnCardFromStock() {
+    this.stock.opened.unshift(this.stock.closed.pop());
+  }
+
   takeCardFromStock() {}
   placeCardInPile() {}
   result() {}
