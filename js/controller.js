@@ -86,12 +86,32 @@ const availableActions = (data) => {
   return availableActions;
 };
 
+const inRange = (value, start, end) => {
+  return value < end && value >= start;
+};
+
+const areValidInputsForPTP = (tableau, from, to, index) => {
+  const fromPile = tableau[from - 1];
+  return (
+    fromPile &&
+    tableau[to - 1] &&
+    inRange(
+      index,
+      fromPile.closed.length,
+      fromPile.closed.length + fromPile.opened.length
+    )
+  );
+};
+
 const pileToPile = (gameData) => {
   const from = view.takeInput(inputPrompts.fromPile);
   const index = view.takeInput(inputPrompts.rowIndex);
   const to = view.takeInput(inputPrompts.toPile);
 
+  if (!areValidInputsForPTP(gameData.piles, from, to, index)) return false;
+
   game.pileToPile(from, to, index);
+  return true;
 };
 
 const pileToFoundation = (gameData) => {
