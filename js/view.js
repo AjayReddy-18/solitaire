@@ -9,18 +9,14 @@ export class Interface {
     console.clear();
     console.log(this.header);
     console.log(stock, "\t\t\t\t", foundations);
-    console.log();
-    console.log();
-    console.log();
+    console.log("\n\n\n");
     console.log(this.pileHeader);
     console.log(piles);
   }
 
-  displayActions(stockAction) {
+  displayActions(availableActions) {
     console.log("\n\nActions:");
-    console.log("1. Pile to Pile");
-    console.log("2. Pile to foundation");
-    console.log(`${stockAction}`);
+    console.log(`${availableActions}`);
     console.log();
   }
 

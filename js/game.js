@@ -44,7 +44,20 @@ export class Game {
     this.stock.opened.unshift(this.stock.closed.pop());
   }
 
-  takeCardFromStock() {}
-  placeCardInPile() {}
-  result() {}
+  stockToPile(to) {
+    const toPile = this.piles[to - 1];
+
+    toPile.opened.unshift(this.stock.opened.shift());
+  }
+
+  stockToFoundation(to) {
+    const foundation = this.foundations[to - 1];
+
+    foundation.unshift(this.stock.opened.shift());
+  }
+
+  closeStock() {
+    this.stock.closed = this.stock.opened.reverse();
+    this.stock.opened = [];
+  }
 }
