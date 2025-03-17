@@ -32,8 +32,15 @@ export class Game {
     if (fromPile.opened.length === 0) this.turnCard(fromPile);
   }
 
+  pileToFoundation(from, to) {
+    const fromPile = this.piles[from - 1];
+    const foundation = this.foundations[to - 1];
+
+    foundation.unshift(fromPile.opened.shift());
+    if (fromPile.opened.length === 0) this.turnCard(fromPile);
+  }
+
   takeCardFromStock() {}
-  placeCardInFoundation() {}
   placeCardInPile() {}
   result() {}
 }

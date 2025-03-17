@@ -73,8 +73,15 @@ const pileToPile = (gameData) => {
   game.pileToPile(from, to, index);
 };
 
+const pileToFoundation = (gameData) => {
+  const from = view.takeInput("Enter 'from' Pile number:");
+  const to = view.takeInput("Enter foundation number:");
+
+  game.pileToFoundation(from, to);
+};
+
 const performAction = (gameData, action) => {
-  const actions = [pileToPile];
+  const actions = [pileToPile, pileToFoundation];
 
   return actions[action - 1](gameData);
 };
