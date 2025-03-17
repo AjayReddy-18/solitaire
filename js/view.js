@@ -16,7 +16,17 @@ export class Interface {
     console.log(piles);
   }
 
-  displayPrompt() {}
+  displayActions(stockAction) {
+    console.log("\n\nActions:");
+    console.log("1. Pile to Pile");
+    console.log("2. Pile to foundation");
+    console.log(`${stockAction}`);
+    console.log();
+  }
+
   displayError() {}
-  takeInput() {}
+
+  takeInput(inputPrompt) {
+    return +prompt(inputPrompt);
+  }
 }

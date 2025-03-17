@@ -23,8 +23,8 @@ export class Deck {
   }
 
   solitaireArrangement() {
-    // const cards = [...this.cards];
-    const cards = this.#shuffle();
+    const cards = [...this.cards];
+    // const cards = this.#shuffle();
     return {
       piles: Array.from({ length: 7 }, (_, i) => {
         const cardsInPile = cards.splice(0, i + 1);
