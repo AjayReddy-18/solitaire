@@ -28,4 +28,11 @@ export class Interface {
   takeInput(inputPrompt) {
     return +prompt(inputPrompt);
   }
+
+  displayResults(results) {
+    console.clear();
+    console.log("You won the game!");
+    console.log(`Moves taken: ${results.moves}`);
+    console.log(`Time Taken ${results.time}ms`);
+  }
 }

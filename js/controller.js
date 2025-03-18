@@ -242,7 +242,8 @@ const play = (game) => {
   while (!game.hasWon()) {
     if (playerTurn(gameData)) game.incrementMoves();
   }
-  game.showResults();
+  const results = game.results();
+  view.displayResults = results;
 };
 
 const main = () => {

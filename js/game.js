@@ -13,6 +13,7 @@ export class Game {
       [{ value: 0, suit: "DIAMONDS" }],
     ];
     this.moves = 0;
+    this.startTime = Date.now();
   }
 
   incrementMoves() {
@@ -20,8 +21,10 @@ export class Game {
   }
 
   hasWon() {
-    // return this.moves === 4;
-    return false;
+    const totalCards = this.foundations
+      .reduce((sum, foundation) => sum + foundation.length, 0);
+    
+    return totalCards === 56;
   }
 
   data() {
@@ -70,5 +73,9 @@ export class Game {
   closeStock() {
     this.stock.closed = this.stock.opened.reverse();
     this.stock.opened = [];
+  }
+
+  results() {
+    return { moves: this.moves, time: [Date.now() - this.startTime] };
   }
 }
