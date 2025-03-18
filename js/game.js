@@ -6,7 +6,12 @@ export class Game {
     const { stock, piles } = this.deck.solitaireArrangement();
     this.stock = stock;
     this.piles = piles;
-    this.foundations = [[], [], [], []];
+    this.foundations = [
+      [{ value: 0, type: "SPADES" }],
+      [{ value: 0, type: "HEARTS" }],
+      [{ value: 0, type: "CLUBS" }],
+      [{ value: 0, type: "DIAMONDS" }],
+    ];
     this.moves = 0;
   }
 
@@ -15,7 +20,7 @@ export class Game {
   }
 
   hasWon() {
-    return false;
+    return this.moves === 4;
   }
 
   data() {

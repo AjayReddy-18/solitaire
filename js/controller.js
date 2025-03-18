@@ -19,6 +19,7 @@ const inputPrompts = {
 
 const errorMessages = {
   action: "Invalid action!",
+  move: "Invalid move!",
 };
 
 const processStock = (stock) => {
@@ -54,7 +55,7 @@ const processPiles = (piles) => {
 
 const processFoundation = (foundations) => {
   return foundations
-    .map((suit) => (suit.length === 0 ? "Empty" : suit[0]))
+    .map((suit) => (suit.length === 1 ? "Empty" : suit[0]))
     .join("\t\t");
 };
 
@@ -90,16 +91,27 @@ const inRange = (value, start, end) => {
   return value < end && value >= start;
 };
 
+const isPreceding = (bottom, top) => top.value - bottom.value === 1;
+
+const isSameColor = (bottom, top) => bottom.color === top.color;
+
 const areValidInputsForPTP = (tableau, from, to, index) => {
   const fromPile = tableau[from - 1];
+  const toPile = tableau[to - 1];
+  const swapIndex = fromPile.closed.length + fromPile.opened.length - index - 1;
+  const bottom = toPile.opened[0] || { value: 0 };
+  const top = fromPile.opened[swapIndex];
+
   return (
     fromPile &&
-    tableau[to - 1] &&
+    toPile &&
     inRange(
       index,
       fromPile.closed.length,
       fromPile.closed.length + fromPile.opened.length
-    )
+    ) &&
+    isPreceding(bottom, top) &&
+    !isSameColor(bottom, top)
   );
 };
 
@@ -108,21 +120,44 @@ const pileToPile = (gameData) => {
   const index = view.takeInput(inputPrompts.rowIndex);
   const to = view.takeInput(inputPrompts.toPile);
 
-  if (!areValidInputsForPTP(gameData.piles, from, to, index)) return false;
+  if (!areValidInputsForPTP(gameData.piles, from, to, index)) {
+    view.displayError(errorMessages.move);
+    return false;
+  }
 
   game.pileToPile(from, to, index);
   return true;
+};
+
+const isValidForFoundation = (foundationTop, pileTop) => {
+  return (
+    foundationTop.type === pileTop.type && isPreceding(pileTop, foundationTop)
+  );
+};
+
+const areValidInputsForPTF = (pile, foundation) => {
+  const pileTop = pile.opened[0];
+  return pileTop && isValidForFoundation(foundation[0], pileTop);
 };
 
 const pileToFoundation = (gameData) => {
   const from = view.takeInput(inputPrompts.fromPile);
   const to = view.takeInput(inputPrompts.foundation);
 
+  const { piles, foundations } = gameData;
+
+  if (!areValidInputsForPTF(piles[from - 1], foundations[to - 1])) {
+    view.displayError(errorMessages.move);
+    return false;
+  }
+
   game.pileToFoundation(from, to);
+  return true;
 };
 
 const turnCardFromStock = () => {
   game.turnCardFromStock();
+  return true;
 };
 
 const stockToPile = () => {
