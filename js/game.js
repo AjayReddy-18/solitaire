@@ -7,10 +7,10 @@ export class Game {
     this.stock = stock;
     this.piles = piles;
     this.foundations = [
-      [{ value: 0, type: "SPADES" }],
-      [{ value: 0, type: "HEARTS" }],
-      [{ value: 0, type: "CLUBS" }],
-      [{ value: 0, type: "DIAMONDS" }],
+      [{ value: 0, suit: "SPADES" }],
+      [{ value: 0, suit: "HEARTS" }],
+      [{ value: 0, suit: "CLUBS" }],
+      [{ value: 0, suit: "DIAMONDS" }],
     ];
     this.moves = 0;
   }
@@ -20,7 +20,8 @@ export class Game {
   }
 
   hasWon() {
-    return this.moves === 4;
+    // return this.moves === 4;
+    return false;
   }
 
   data() {

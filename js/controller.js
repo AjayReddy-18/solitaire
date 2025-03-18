@@ -99,7 +99,7 @@ const areValidInputsForPTP = (tableau, from, to, index) => {
   const fromPile = tableau[from - 1];
   const toPile = tableau[to - 1];
   const swapIndex = fromPile.closed.length + fromPile.opened.length - index - 1;
-  const bottom = toPile.opened[0] || { value: 0 };
+  const bottom = toPile.opened[0] || { value: 14 };
   const top = fromPile.opened[swapIndex];
 
   return (
@@ -110,7 +110,7 @@ const areValidInputsForPTP = (tableau, from, to, index) => {
       fromPile.closed.length,
       fromPile.closed.length + fromPile.opened.length
     ) &&
-    isPreceding(bottom, top) &&
+    isPreceding(top, bottom) &&
     !isSameColor(bottom, top)
   );
 };
@@ -129,9 +129,10 @@ const pileToPile = (gameData) => {
   return true;
 };
 
-const isValidForFoundation = (foundationTop, pileTop) => {
+const isValidForFoundation = (foundationTop, candidate) => {
   return (
-    foundationTop.type === pileTop.type && isPreceding(pileTop, foundationTop)
+    foundationTop.suit === candidate.suit &&
+    isPreceding(foundationTop, candidate)
   );
 };
 
@@ -160,20 +161,40 @@ const turnCardFromStock = () => {
   return true;
 };
 
-const stockToPile = () => {
-  const to = view.takeInput(inputPrompts.toPile);
+const areValidInputsForSTP = (stockTop, pile) => {
+  const pileTop = pile.opened[0] || { value: 14 };
 
-  game.stockToPile(to);
+  return isPreceding(stockTop, pileTop) && !isSameColor(pileTop, stockTop);
 };
 
-const stockToFoundation = () => {
+const stockToPile = (gameData) => {
+  const to = view.takeInput(inputPrompts.toPile);
+
+  if (!areValidInputsForSTP(gameData.stock.opened[0], gameData.piles[to - 1])) {
+    view.displayError(errorMessages.move);
+    return false;
+  }
+
+  game.stockToPile(to);
+  return true;
+};
+
+const stockToFoundation = (gameData) => {
   const to = view.takeInput(inputPrompts.foundation);
+  const { foundations, stock } = gameData;
+
+  if (!isValidForFoundation(foundations[to - 1][0], stock.opened[0])) {
+    view.displayError(errorMessages.move);
+    return false;
+  }
 
   game.stockToFoundation(to);
+  return true;
 };
 
 const closeStock = () => {
   game.closeStock();
+  return true;
 };
 
 const performAction = (gameData, action) => {
