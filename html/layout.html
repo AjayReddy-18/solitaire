@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .game {
+        height: 900px;
+        width: 100%;
+        border: 1px solid black;
+      }
+      .stockpile {
+        height: 100%;
+        width: 40%;
+        display: grid;
+        gap: 2px;
+        border: 1px solid black;
+        grid-template-columns: repeat(2, 40%);
+        align-items: center;
+      }
+      .base {
+        height: 30%;
+        width: 100%;
+        display: flex;
+      }
+      .foundation {
+        height: 100%;
+        width: 60%;
+        grid-template-columns: repeat(4, 24%);
+        align-items: center;
+        justify-content: center;
+        display: grid;
+        gap: 2px;
+        border: 1px solid black;
+      }
+      .tableua {
+        height: 70%;
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(7, 14%);
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+        border: 1px solid black;
+      }
+      .cards {
+        height: 94%;
+        border: 1px solid black;
+      }
+      .closed-face {
+        height: 94%;
+        border: 1px solid black;
+      }
+
+      .opened-face {
+        height: 94%;
+        border: 1px solid black;
+      }
+      .deck {
+        height: 94%;
+        border: 1px solid black;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="game">
+      <div class="base">
+        <div class="stockpile">
+          <div class="closed-face"></div>
+          <div class="opened-face"></div>
+        </div>
+
+        <div class="foundation">
+          <div class="deck"></div>
+          <div class="deck"></div>
+          <div class="deck"></div>
+          <div class="deck"></div>
+        </div>
+      </div>
+
+      <div class="tableua">
+        <div class="column-1 cards"></div>
+        <div class="column-2 cards"></div>
+        <div class="column-3 cards"></div>
+        <div class="column-4 cards"></div>
+        <div class="column-5 cards"></div>
+        <div class="column-6 cards"></div>
+        <div class="column-7 cards"></div>
+      </div>
+    </div>
+  </body>
+</html>
