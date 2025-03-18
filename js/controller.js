@@ -32,7 +32,12 @@ const processStock = (stock) => {
 };
 
 const processPiles = (piles) => {
-  const rows = Array.from({ length: 10 }, () => []);
+  const max = piles.reduce((max, pile) => {
+    const pileLength = pile.opened.length + pile.closed.length;
+    return pileLength > max ? pileLength : max;
+  }, 0);
+
+  const rows = Array.from({ length: max }, () => []);
 
   const newPiles = Array.from({ length: 7 }, (_, i) => {
     const newPile = piles[i].opened
@@ -41,7 +46,7 @@ const processPiles = (piles) => {
 
     return newPile.concat(Array(10 - newPile.length).fill(""));
   });
-  newPiles.unshift(Array.from({ length: 10 }, (_, i) => i));
+  newPiles.unshift(Array.from({ length: max }, (_, i) => i));
 
   newPiles.forEach((pile) => {
     pile.forEach((card, i) => {
