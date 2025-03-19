@@ -248,7 +248,7 @@ const play = (game) => {
     if (playerTurn(gameData)) game.incrementMoves();
   }
   const results = game.results();
-  view.displayResults = results;
+  view.displayResults(results);
 };
 
 const main = () => {
@@ -257,4 +257,4 @@ const main = () => {
 
 const game = new Game();
 const view = new Interface();
-main();
+main(); 

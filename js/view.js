@@ -33,6 +33,6 @@ export class Interface {
     console.clear();
     console.log("You won the game!");
     console.log(`Moves taken: ${results.moves}`);
-    console.log(`Time Taken ${results.time}ms`);
+    console.log(`Time Taken: ${results.time}ms`);
   }
 }

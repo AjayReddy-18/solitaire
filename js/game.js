@@ -21,9 +21,11 @@ export class Game {
   }
 
   hasWon() {
-    const totalCards = this.foundations
-      .reduce((sum, foundation) => sum + foundation.length, 0);
-    
+    const totalCards = this.foundations.reduce(
+      (sum, foundation) => sum + foundation.length,
+      0
+    );
+
     return totalCards === 56;
   }
 
