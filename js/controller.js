@@ -212,7 +212,12 @@ const performAction = (gameData, action) => {
     closeStock,
   ];
 
-  return actions[action - 1](gameData);
+  try {
+    return actions[action - 1](gameData);
+  } catch {
+    view.displayError(errorMessages.move);
+    return false;
+  }
 };
 
 const availableActionsInString = (validActions) => {
@@ -257,4 +262,4 @@ const main = () => {
 
 const game = new Game();
 const view = new Interface();
-main(); 
+main();
